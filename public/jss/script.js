@@ -24,9 +24,9 @@ function init() {
 			console.log( err );
 		});
 
+    }
 
 
-}
 /*
     $.ajax({
 		url: "/blog-posts",
@@ -54,6 +54,7 @@ function init() {
 				}
     });    
 }
+*/
 
 $("#newPost").on("click", function(event){
 event.preventDefault();
@@ -161,10 +162,9 @@ $("#updatebtn").on("click", function(event){
     $("#contentUpdate").val("");
     $("#authorUpdate").val("");
     $("#publishDate").val("");
-*/
+
     
 
-
-
+});
 
 $(init);//of init(); for native js
