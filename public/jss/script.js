@@ -1,6 +1,33 @@
 function init() {
-    
+ 
+    fetch('/blog-posts')
+		.then( response => {
 
+			if ( response.ok ){
+				return response.json();
+			}
+
+			throw new Error ( response.statusText );
+		})
+		.then( responseJSON => {
+
+			for ( let i = 0; i < responseJSON.length; i ++ ){
+                $("#blogLists").append(`<div> <h3> ${responseJSON[i].title} </h3>
+                <p> ${responseJSON[i].id} </p>
+                <h4> ${responseJSON[i].author} </h4>
+                <p> ${responseJSON[i].content} </p>
+                <p> ${responseJSON[i].publishDate} </p>
+                </div>`);
+			}
+		})
+		.catch( err => {
+			console.log( err );
+		});
+
+
+
+}
+/*
     $.ajax({
 		url: "/blog-posts",
 		method: 'GET',
@@ -134,8 +161,8 @@ $("#updatebtn").on("click", function(event){
     $("#contentUpdate").val("");
     $("#authorUpdate").val("");
     $("#publishDate").val("");
-
-    });
+*/
+    
 
 
 

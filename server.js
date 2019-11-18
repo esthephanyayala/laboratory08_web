@@ -17,7 +17,7 @@ app.use(express.static('public'));//Say to my server were gonna user public dire
 app.use(morgan("dev"));
 
 
-/*
+
 let blogPost =[ {
     id: uuidv4(),
     title: "This is my first post",
@@ -32,13 +32,13 @@ content: "This is the content of my second post",
 author: "Juan",
 publishDate: new Date(2019,10,23)
 }] ;
-*/
+
 
 //request of all blog posts should go to /blog-posts
 app.get("/blog-posts", (req, res, next) =>{
     BlogPostList.get()
     .then( blogPost => {
-        return res.status( 200 ).json( students );
+        return res.status( 200 ).json( blogPost );
     })
     .catch( error => {
         res.statusMessage = "Something went wrong with the DB. Try again later.";
@@ -133,6 +133,13 @@ app.post("/blog-posts",jsonParser,(req,res) =>{
             status: 406
         });
     } else {
+        let newBlogPost = {
+            id: uuidv4(),
+            title: title,
+            content: content,
+            author: author,
+            publishDate: publishDate
+        }
         BlogPostList.post(newBlogPost)
 		.then( blogPost => {
 			return res.status( 201 ).json({
@@ -153,13 +160,7 @@ app.post("/blog-posts",jsonParser,(req,res) =>{
 
     /*
     res.statusMessage = "success";
-    let newBlog = {
-        id: uuidv4(),
-        title: title,
-        content: content,
-        author: author,
-        publishDate: publishDate
-    }
+   
 
     blogPost.push(newBlog);
 
