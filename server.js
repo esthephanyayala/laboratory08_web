@@ -248,65 +248,63 @@ app.put("/blog-posts/:id", jsonParser , (req,res) =>{
             status: 406
         });
     }
-    if (id2 == null || !exists(id2)){
+    /*
+        if (id2 == null || !exists(id2)){
         res.statusMessage = "There's no id in the body"
         return res.status(406).json({
             message: "there's no id in the body",
             status: 406
         });
     }
+    */
 
       /*You need to pass in the body an object with the updated content of the blog
 post. This object may just contain 1 field, 2 fields, 3 fields or 4 fields (title,
     content, author, publishDate) Just update whatever is passed, the rest
     should stay the same. Send a 202 status with the updated object.*/
+    
+
     let title = req.body.title;
     let content = req.body.content;
     let author = req.body.author;
     let publishDate = req.body.publishDate;
 
-    for (let i=0 ; i < blogPost.length ; i++){
+    for (let i=0 ; i < req.body.length ; i++){
 
-        if (id1 == blogPost[i].id){
+        if (id1 == req.body[i].id){
             if (title != null){
-                blogPost[i].title = title;
+                req.body[i].title = title;
             }
             if (content != null){
-                blogPost[i].content = content;
+                req.body[i].content = content;
             }
             if (author != null){
-                blogPost[i].author = author;
+                req.body[i].author = author;
             }
             if (publishDate != null){
-                blogPost[i].publishDate = publishDate;
+                req.body[i].publishDate = publishDate;
             }
 
         }
         
     }
 
-    BlogPostList.put(updatedBlogPost)
-    .then( blogPost => {
-        res.status(202).json({
-            message : "Successfully updated the post",
-            status : 202,
-            blogPost : blogPost
-        });
-    })
-    .catch( err => {
-        if( err.message == 404 ) {
+
+    BlogPostList.put(req.body)
+    .then(updatedBlogPost => {
+        if(!updatedBlogPost) {
+            res.statusMessage = "post dont exists";
             return res.status(404).json({
-                message: "Post not found in the list",
+                message: res.statusMessage,
                 status: 404
             });
         }
-        else{
-            res.statusMessage = "Something went wrong with the DB. Try again later.";
-            return res.status( 500 ).json({
-                status : 500,
-                message : "Something went wrong with the DB. Try again later."
-            })
-        }
+        return res.status(202).json({
+            message: "Blog updated",
+            status: 202
+        });
+    })
+    .catch(err => { throw Error(err) });
     });
 
 
@@ -320,7 +318,7 @@ post. This object may just contain 1 field, 2 fields, 3 fields or 4 fields (titl
 
     */
 
-});
+
 
 let server;
 

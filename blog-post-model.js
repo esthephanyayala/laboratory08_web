@@ -46,25 +46,18 @@ let BlogPostList = {
 					throw Error(error);
 				});
 	},
-	put : function(updatedStudent){
-		return BlogPost.getByID( updatedBlogPost.id )
-			.then( blogPost => {
-				if ( blogPost ){
-					return BlogPost.findOneAndUpdate( {id : blogPost.id}, {$set : updatedBlogPost}, {new : true})
-						.then( newBlogPost => {
-							return newBlogPost;
+	put : function(updatedBlogPost){
+		
+					return BlogPost.findOneAndUpdate( {id : updatedBlogPost.id}, {$set : updatedBlogPost})
+						.then( blogPost => {
+							return blogPost;
 						})
 						.catch(error => {
 							throw Error(error);
 						});
-				}
-				else{
-					throw Error( "404" );
-				}
-			})
-			.catch( error => {
-				throw Error(error);
-			});
+				
+			
+		
     },
     
     delete: function(id){
