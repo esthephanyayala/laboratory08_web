@@ -8,6 +8,7 @@ const { DATABASE_URL, PORT } = require( './config' );
 
 let app = express();
 let jsonParser = bodyParser.json();
+let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 
