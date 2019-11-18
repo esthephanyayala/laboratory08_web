@@ -1,3 +1,6 @@
+
+//mongodb+srv://esthephanyayala:esthephanyayala@cluster0-mfvmc.mongodb.net/test?retryWrites=true&w=majority
+
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
